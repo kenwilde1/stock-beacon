@@ -43,6 +43,12 @@ client.on("message", async (message) => {
       .substring(PREFIX.length)
       .split(/\s+/);
 
+    // !help
+    if (command == "help") {
+      message.channel.send("```python  ![ticker] - get price data```");
+    }
+
+    // ![ticker]
     let finalMessage;
     try {
       const { price, timestamp } = await getPrice(`${command.toUpperCase()}`);
