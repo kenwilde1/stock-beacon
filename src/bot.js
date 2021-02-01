@@ -18,13 +18,12 @@ client.on("message", async (message) => {
       .substring(PREFIX.length)
       .split(/\s+/);
 
-    try {
-      const price = await getPrice(`${command.toUpperCase()}`);
+    const price = await getPrice(`${command.toUpperCase()}`);
+    if (price != undefined) {
       const timestamp = new Date();
-
       const embedMsg = formatEmbed(command.toUpperCase(), price, timestamp);
       message.channel.send({ embed: embedMsg });
-    } catch (error) {
+    } else {
       message.channel.send(
         ` \`\`\`Sorry, there's no ticker data available for $${command} \`\`\``
       );
