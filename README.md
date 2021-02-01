@@ -1,6 +1,8 @@
-# stock-beacon
+<h1 align="center">Stock Beacon</h1>
 
-![logo](./src/logo.png)
+<p align="center">
+  <img width="460" height="300" src="./src/readmelogo.png">
+</p>
 
 Discord Bot that provides Intraday Time Series Data for tickers available on the NYSE.
 
