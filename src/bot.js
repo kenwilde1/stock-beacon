@@ -20,7 +20,7 @@ client.on("message", async (message) => {
 
     const price = await getPrice(`${command.toUpperCase()}`);
     console.log(price);
-    if (price != undefined) {
+    if (price != "0") {
       const timestamp = new Date();
       const embedMsg = formatEmbed(command.toUpperCase(), price, timestamp);
       message.channel.send({ embed: embedMsg });
