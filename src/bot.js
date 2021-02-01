@@ -19,6 +19,7 @@ client.on("message", async (message) => {
       .split(/\s+/);
 
     const price = await getPrice(`${command.toUpperCase()}`);
+    console.log(price);
     if (price != undefined) {
       const timestamp = new Date();
       const embedMsg = formatEmbed(command.toUpperCase(), price, timestamp);
