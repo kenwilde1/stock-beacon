@@ -1,6 +1,7 @@
 // Import Libraries
 require("dotenv").config();
 const fetch = require("node-fetch");
+const moment = require("moment-timezone");
 const { Client, Channel } = require("discord.js");
 const PREFIX = "!";
 
@@ -27,6 +28,13 @@ const getPrice = async (ticker) => {
   return { price, timestamp };
 };
 
+const convertTimezone = (time) => {
+  let a = moment.tz(time, "America/New_York");
+  a.format();
+  a.utc().format();
+  return a;
+};
+
 client.on("message", async (message) => {
   if (message.author.bot) return;
   if (message.content.startsWith(PREFIX)) {
@@ -35,13 +43,22 @@ client.on("message", async (message) => {
       .substring(PREFIX.length)
       .split(/\s+/);
 
-    const { price, timestamp } = await getPrice(`${command.toUpperCase()}`);
+    let finalMessage;
+    try {
+      const { price, timestamp } = await getPrice(`${command.toUpperCase()}`);
+      const convertedTimestamp = convertTimezone(
+        timestamp["3. Last Refreshed"]
+      );
 
-    let messageHeader = `$${command.toUpperCase()}\n`;
-    let messageContent = `${price} USD\n`;
-    let messageTimestamp = `as of: ${timestamp["3. Last Refreshed"]}`;
+      let messageHeader = `$${command.toUpperCase()}\n`;
+      let messageContent = `${price} USD\n`;
+      let messageTimestamp = `as of: ${convertedTimestamp} (GMT)`;
 
-    let finalMessage = ` \`\`\`${messageHeader}${messageContent}${messageTimestamp} \`\`\` `;
+      finalMessage = ` \`\`\`python\n${messageHeader}${messageContent}${messageTimestamp} \`\`\` `;
+    } catch (error) {
+      console.log(error);
+      finalMessage = "```Sorry, there is no data available for that ticker```";
+    }
 
     message.channel.send(`${finalMessage}`);
   }
