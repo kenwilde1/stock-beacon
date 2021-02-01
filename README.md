@@ -26,7 +26,7 @@ Want to run it locally?
 Example Usage: (The prefix is '!' for all commands)
 
 ```
--> !IBM
+-> !AMC
 ```
 
 Example Output:
