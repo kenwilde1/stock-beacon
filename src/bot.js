@@ -19,15 +19,10 @@ client.on("message", async (message) => {
       .split(/\s+/);
 
     try {
-      const { price, timestamp } = await getPrice(`${command.toUpperCase()}`);
-      const convertedTimestamp = convertTimezone(
-        timestamp["3. Last Refreshed"]
-      );
-      const embedMsg = formatEmbed(
-        command.toUpperCase(),
-        price,
-        convertedTimestamp
-      );
+      const price = await getPrice(`${command.toUpperCase()}`);
+      const timestamp = new Date();
+
+      const embedMsg = formatEmbed(command.toUpperCase(), price, timestamp);
       message.channel.send({ embed: embedMsg });
     } catch (error) {
       message.channel.send(

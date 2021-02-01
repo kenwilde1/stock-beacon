@@ -6,16 +6,11 @@ const getPrice = async (ticker) => {
   let price;
   let timestamp;
   const request = await fetch(
-    `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${ticker}&interval=1min&apikey=${process.env.API_KEY}`
+    `https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${process.env.API_KEY}`
   );
   const response = await request.json();
-  const data = await response;
-  timestamp = response[Object.keys(response)[0]];
-  console.log(timestamp);
-  const obj = await data["Time Series (5min)"];
-  price = await obj[Object.keys(obj)[0]]["1. open"];
-  console.log(price);
-  return { price, timestamp };
+  console.log(response);
+  return response.c;
 };
 
 const convertTimezone = (time) => {
