@@ -2,7 +2,7 @@
 require("dotenv").config();
 const fetch = require("node-fetch");
 const moment = require("moment-timezone");
-const { Client, Channel } = require("discord.js");
+const { Client } = require("discord.js");
 const PREFIX = "!";
 
 // Create an Instance of Client
